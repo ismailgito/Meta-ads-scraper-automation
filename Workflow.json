@@ -1,0 +1,467 @@
+{
+  "name": "Meta ads competitor analysis",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        176,
+        -32
+      ],
+      "id": "fce989dd-2843-4caf-8e39-36f9740aa578",
+      "name": "Trigger"
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "=✅ *Meta Ads Sync Complete*  new ad(s) added to Google sheet  🕒 {{ $now.format('ccc, dd LLL yyyy - HH:mm') }}  \n📂 URL: https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_ID/edit?gid=0#gid=0",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2432,
+        -32
+      ],
+      "id": "1d232284-4372-4607-a1eb-7b452df88d6a",
+      "name": "Send a text message",
+      "webhookId": "3b171dbb-63b8-422d-9bd2-7b68a2761bd6"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5e92d105-7380-4619-a0d1-c0945c804881",
+              "leftValue": "={{ $json.daysRunning }}",
+              "rightValue": 30,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        720,
+        -32
+      ],
+      "id": "6a45bfe6-0696-425e-97d2-bb07729b1514",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dc90eee7-4fc5-4052-82e3-2a87fabc714c",
+              "name": "Library ID",
+              "value": "={{ $json.adArchiveId }}",
+              "type": "string"
+            },
+            {
+              "id": "2d67c454-6420-4195-93d9-31302911b5f5",
+              "name": "Company name ",
+              "value": "={{ $json.pageName }}",
+              "type": "string"
+            },
+            {
+              "id": "8d04c476-3b62-4455-ac0e-e8b3cf1bb2a2",
+              "name": "Status",
+              "value": "={{ $json.adActiveStatus }}",
+              "type": "string"
+            },
+            {
+              "id": "201d34dc-296c-4cb3-b711-cee200b5609b",
+              "name": "Days",
+              "value": "={{ $json.daysRunning }}",
+              "type": "number"
+            },
+            {
+              "id": "a052145a-9326-4721-a9f1-c2ef4c151b15",
+              "name": "Social media",
+              "value": "={{ $json.publisherPlatforms[0] }}\n{{ $json.publisherPlatforms[1] }}\n{{ $json.publisherPlatforms[2] }}\n{{ $json.publisherPlatforms[3] }}",
+              "type": "string"
+            },
+            {
+              "id": "bdea87b0-e211-4480-88b8-c20da1b22824",
+              "name": "Headline",
+              "value": "={{ $json.creatives[0].title }}",
+              "type": "string"
+            },
+            {
+              "id": "a367972c-6c36-49a6-b387-5a7327e4da52",
+              "name": "Body",
+              "value": "={{ $json.creatives[0].body }}",
+              "type": "string"
+            },
+            {
+              "id": "49ebb3fd-696f-4bff-a022-8f7ed9da2e56",
+              "name": "CTA",
+              "value": "={{ $json.creatives[0].ctaText }}",
+              "type": "string"
+            },
+            {
+              "id": "777dee29-36df-40d6-b914-1322f692ec17",
+              "name": "Landing page",
+              "value": "={{ $json.creatives[0].destinationUrl }}",
+              "type": "string"
+            },
+            {
+              "id": "0d50b1c1-4c18-432b-abac-de4945233347",
+              "name": "Description",
+              "value": "={{ $json.creatives[0].description }}",
+              "type": "string"
+            },
+            {
+              "id": "2761b5d1-3b62-4353-9c04-b57762193233",
+              "name": "Launch date",
+              "value": "={{ $json.adDeliveryStartTime }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        992,
+        -32
+      ],
+      "id": "d23102bd-a431-454b-8c72-eeb9c52b21c1",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "url": "https://api.apify.com/v2/actors/brilliant_gum~facebook-ads-library-scraper/run-sync-get-dataset-items",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "apifyApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n    \"countries\": [\n        \"india \"\n    ],\n    \"maxAds\": 7,\n    \"resolveSnapshotUrls\": false,\n    \"searchTerms\": [\n        \"Nike\",\n        \"puma\"\n    ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        464,
+        -32
+      ],
+      "id": "dd685d8a-7fad-4586-baef-a954ebada189",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analyze this Meta ad and return the JSON object as instructed in your system prompt.\n\nLibrary ID: {{ $json['Library ID'] }}\nAd URL: {{ $json[\"Landing page\"] }}\nPage/Advertiser: {{ $json['Company name '] }}\nStatus: {{ $json.is_active ? \"Active\" : \"Inactive\" }}\nDays: {{ $json.Days }}\nToday's date: {{ $now.format('yyyy-MM-dd') }}\n\nPrimary text/body copy:\n\"{{ $json.Body }}\"\"\n\nHeadline: {{ $json.Headline }}\nLink description: {{ $json['Landing page'] }}\nCTA button text: {{ $json.CTA }}\n\nDo not overload your self take 5-10 seconds \n\nReturn the JSON object only.\n",
+        "options": {
+          "systemMessage": "You are a senior performance-marketing analyst who reverse-engineers competitor Meta ad creatives for a paid-ads team. For every ad you receive, extract structured, evidence-based data — never invent facts that aren't visible in the input.\n\nWHAT YOU RECEIVE\nPer ad: primary text/body copy, headline, link description, CTA button text, page name, start date, active/inactive status, and (when provided) a description or image of the creative.\n\nWHAT YOU EXTRACT — use this controlled vocabulary. If nothing fits exactly, pick the closest label and append \"(other)\" — don't invent new categories.\n\n1. hook_type — the opening line or first visual frame that earns attention:\nPain/Problem | Curiosity/Question | Bold Claim/Stat | Social Proof | Direct Offer | Founder/Origin Story | Comparison | Pattern Interrupt | UGC Testimonial\n\n2. visual_angle — the creative execution/format:\nUGC/Creator | Studio Product Shot | Talking Head/Founder-to-camera | Before/After | Demo/Screen Recording | Static Graphic/Text-on-background | Carousel/Comparison Grid | Lifestyle Photography | Animation/Motion Graphics\n\n3. message — the core persuasion angle in the copy (label + one short justification):\nPain-Agitate-Solve | Feature→Benefit | Social Proof/Reviews | Urgency/Scarcity | Price/Discount-led | Authority/Expert-led | Problem→Solution | Differentiation/Comparison | Storytelling | Lifestyle/Aspiration\n\n4. cta — the literal CTA button text plus any urgency qualifier in the copy (e.g. \"Shop Now — Ends Tonight\"). If no explicit CTA is visible, write \"No explicit CTA.\"\n\n5. longevity — calculate ONLY from the start/end dates and status you're given, against today's date. Never guess.\nNew (<7 days) | Testing (7–30 days) | Validated (30–90 days) | Proven Winner (90+ days, still active) | Unknown (no date data provided)\nAlways state the actual day count next to the label.\n\n6. result — Meta Ad Library does not expose spend, CTR, or ROAS for standard commercial ads. NEVER fabricate a performance number. Infer purely from the longevity heuristic:\nLikely Winning (active, 30+ days — brands don't keep paying for losers)\nLikely Testing (active, under 30 days, or one of several near-identical variants)\nLikely Paused/Losing (inactive, ran under 14 days)\nInsufficient Data (no status/dates provided)\n\nOUTPUT FORMAT\nReturn ONLY a valid JSON object, no markdown fences, no commentary, no preamble — exactly this schema:\n\n{\n  \"library_id\": \"\",\n  \"url\": \"\",\n  \"hook_type\": \"\",\n  \"visual_angle\": \"\",\n  \"message\": \"\",\n  \"cta\": \"\",\n  \"longevity\": \"\",\n  \"result\": \"\"\n}\n\nRULES\n- Every value is a short string (max ~15 words) — no paragraphs.\n- If a required input is missing, write \"Unknown\" for that field instead of guessing.\n- Never output anything outside the single JSON object."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1296,
+        -32
+      ],
+      "id": "e713d6f5-51a6-4480-8e3b-d7546714cffe",
+      "name": "AI Agent",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1296,
+        192
+      ],
+      "id": "8d563b86-6f0c-40eb-9807-bd986baa4e26",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "jsCode": "// This runs once for all items\nconst items = $input.all(); // array of all input items\nconst outputs = [];\n\nfor (const item of items) {\n  const raw = item.json.output;\n  let jsonString = raw;\n  const match = raw.match(/```json\\s*([\\s\\S]*?)```/);\n  if (match) {\n    jsonString = match[1];\n  } else {\n    const braceMatch = raw.match(/\\{[\\s\\S]*\\}/);\n    if (braceMatch) jsonString = braceMatch[0];\n  }\n  jsonString = jsonString.trim()\n    .replace(/,\\s*}/g, '}')\n    .replace(/,\\s*\\]/g, ']');\n\n  let parsed;\n  try {\n    parsed = JSON.parse(jsonString);\n  } catch (e) {\n    parsed = { error: 'Failed to parse JSON', raw: raw };\n  }\n\n  // Fix URL using the original snapshotUrl\n  const original = item.json;\n  parsed.url = original.snapshotUrl || parsed.url || '';\n\n  outputs.push({ json: parsed });\n}\n\nreturn outputs; // returns all 12 items"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1696,
+        -32
+      ],
+      "id": "e0ce165b-678b-4dc3-b4e2-09a47843fc22",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "list",
+          "cachedResultName": "Meta-ads-scraper-competitor-winning-ads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Winning-ads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_ID/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Library ID": "={{ $json.library_id }}",
+            "URL": "={{ $json.url }}",
+            "Hook type": "={{ $json.hook_type }}",
+            "Visual format": "={{ $json.visual_angle }}",
+            "Copy angle ": "={{ $json.message }}",
+            "CTA": "={{ $json.cta }}",
+            "Result": "={{ $json.result }}",
+            "Longitivity ": "={{ $json.longevity }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Library ID",
+              "displayName": "Library ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hook type",
+              "displayName": "Hook type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Visual format",
+              "displayName": "Visual format",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Copy angle ",
+              "displayName": "Copy angle ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CTA",
+              "displayName": "CTA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Longitivity ",
+              "displayName": "Longitivity ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Result",
+              "displayName": "Result",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1952,
+        -32
+      ],
+      "id": "4f96477a-7cfe-451a-9a5b-c09f18c9562f",
+      "name": "Append row in sheet1"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2192,
+        -32
+      ],
+      "id": "66f3bd52-4dbe-4a91-8930-fcaa9841cc11",
+      "name": "Wait",
+      "webhookId": "04108e99-ccb6-4dcd-9a69-bf10aeecc9e5"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        []
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true
+  },
+  "versionId": "8d1e11e6-fd7b-43c9-8bff-4924002757df",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "nodeGroups": [],
+  "id": "4DfgROsS8cXushwd",
+  "tags": []
+}
