@@ -14,8 +14,8 @@
     },
     {
       "parameters": {
-        "chatId": "YOUR_TELEGRAM_CHAT_ID",
-        "text": "=✅ *Meta Ads Sync Complete*  new ad(s) added to Google sheet  🕒 {{ $now.format('ccc, dd LLL yyyy - HH:mm') }}  \n📂 URL: https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_ID/edit?gid=0#gid=0",
+        "chatId": "1075335869",
+        "text": "=✅ *Meta Ads Sync Complete*  new ad(s) added to Google sheet  🕒 {{ $now.format('ccc, dd LLL yyyy - HH:mm') }}  \n📂 URL: https://docs.google.com/spreadsheets/d/1VkXqWCCM-vrk1cjPGFS0fYNGvirysk6TieHlbVqerUs/edit?gid=0#gid=0",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
@@ -26,7 +26,13 @@
       ],
       "id": "1d232284-4372-4607-a1eb-7b452df88d6a",
       "name": "Send a text message",
-      "webhookId": "3b171dbb-63b8-422d-9bd2-7b68a2761bd6"
+      "webhookId": "3b171dbb-63b8-422d-9bd2-7b68a2761bd6",
+      "credentials": {
+        "telegramApi": {
+          "id": "3MUrHT0uJMsiVOtg",
+          "name": "Skubas"
+        }
+      }
     },
     {
       "parameters": {
@@ -146,25 +152,6 @@
     },
     {
       "parameters": {
-        "url": "https://api.apify.com/v2/actors/brilliant_gum~facebook-ads-library-scraper/run-sync-get-dataset-items",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "apifyApi",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "{\n    \"countries\": [\n        \"india \"\n    ],\n    \"maxAds\": 7,\n    \"resolveSnapshotUrls\": false,\n    \"searchTerms\": [\n        \"Nike\",\n        \"puma\"\n    ]\n}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.5,
-      "position": [
-        464,
-        -32
-      ],
-      "id": "dd685d8a-7fad-4586-baef-a954ebada189",
-      "name": "HTTP Request"
-    },
-    {
-      "parameters": {
         "promptType": "define",
         "text": "=Analyze this Meta ad and return the JSON object as instructed in your system prompt.\n\nLibrary ID: {{ $json['Library ID'] }}\nAd URL: {{ $json[\"Landing page\"] }}\nPage/Advertiser: {{ $json['Company name '] }}\nStatus: {{ $json.is_active ? \"Active\" : \"Inactive\" }}\nDays: {{ $json.Days }}\nToday's date: {{ $now.format('yyyy-MM-dd') }}\n\nPrimary text/body copy:\n\"{{ $json.Body }}\"\"\n\nHeadline: {{ $json.Headline }}\nLink description: {{ $json['Landing page'] }}\nCTA button text: {{ $json.CTA }}\n\nDo not overload your self take 5-10 seconds \n\nReturn the JSON object only.\n",
         "options": {
@@ -196,7 +183,13 @@
         192
       ],
       "id": "8d563b86-6f0c-40eb-9807-bd986baa4e26",
-      "name": "Google Gemini Chat Model"
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "DHGYiZiwT0T8SlKa",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
     },
     {
       "parameters": {
@@ -216,17 +209,17 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "YOUR_GOOGLE_SHEET_ID",
+          "value": "1VkXqWCCM-vrk1cjPGFS0fYNGvirysk6TieHlbVqerUs",
           "mode": "list",
           "cachedResultName": "Meta-ads-scraper-competitor-winning-ads",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_ID/edit?usp=drivesdk"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VkXqWCCM-vrk1cjPGFS0fYNGvirysk6TieHlbVqerUs/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Winning-ads",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_ID/edit#gid=0"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VkXqWCCM-vrk1cjPGFS0fYNGvirysk6TieHlbVqerUs/edit#gid=0"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -327,7 +320,13 @@
         -32
       ],
       "id": "4f96477a-7cfe-451a-9a5b-c09f18c9562f",
-      "name": "Append row in sheet1"
+      "name": "Append row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4j4ZrRnP1eFHn7qY",
+          "name": "Google Sheets account"
+        }
+      }
     },
     {
       "parameters": {
@@ -342,6 +341,36 @@
       "id": "66f3bd52-4dbe-4a91-8930-fcaa9841cc11",
       "name": "Wait",
       "webhookId": "04108e99-ccb6-4dcd-9a69-bf10aeecc9e5"
+    },
+    {
+      "parameters": {
+        "operation": "Run actor and get dataset",
+        "actorSource": "store",
+        "actorId": {
+          "__rl": true,
+          "value": "sB6HRFrXuGguboiQf",
+          "mode": "list",
+          "cachedResultName": "Facebook Ads Library Scraper — Meta & Instagram Ads (brilliant_gum/facebook-ads-library-scraper)",
+          "cachedResultUrl": "https://console.apify.com/actors/sB6HRFrXuGguboiQf/input"
+        },
+        "customBody": "{\n    \"countries\": [\n        \"india \"\n    ],\n    \"maxAds\": 7,\n    \"resolveSnapshotUrls\": false,\n    \"searchTerms\": [\n        \"Nike\",\n        \"puma\"\n    ]\n}",
+        "timeout": {},
+        "maxTotalChargeUsd": {}
+      },
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        448,
+        -32
+      ],
+      "id": "1998df67-e03f-4546-9819-da4a4a75b091",
+      "name": "Run an Actor and get dataset",
+      "credentials": {
+        "apifyApi": {
+          "id": "UiBIIjIvzQLMcnzd",
+          "name": "IntoAEC"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -350,7 +379,7 @@
       "main": [
         [
           {
-            "node": "HTTP Request",
+            "node": "Run an Actor and get dataset",
             "type": "main",
             "index": 0
           }
@@ -378,17 +407,6 @@
         [
           {
             "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "Filter",
             "type": "main",
             "index": 0
           }
@@ -449,6 +467,17 @@
           }
         ]
       ]
+    },
+    "Run an Actor and get dataset": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -457,9 +486,10 @@
     "binaryMode": "separate",
     "availableInMCP": true
   },
-  "versionId": "8d1e11e6-fd7b-43c9-8bff-4924002757df",
+  "versionId": "b38e0da5-5105-4bbe-aec0-b9bc92dadccf",
   "meta": {
-    "templateCredsSetupCompleted": false
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a6f9baffe49f469989596305035f296d4efec76f3fb575aa36c9666cc6ea78a3"
   },
   "nodeGroups": [],
   "id": "4DfgROsS8cXushwd",
