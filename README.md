@@ -1,9 +1,7 @@
 <div align="center">
 
-<!-- Animated Typing SVG Header -->
-<a href="https://git.io/typing-svg">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=28&duration=3000&pause=1000&color=1877F2&center=true&vCenter=true&multiline=true&repeat=true&width=700&height=100&lines=%F0%9F%93%8A+Meta+Ads+Competitor+Analysis;%E2%9A%A1+Powered+by+n8n+Automation" alt="Typing SVG" />
-</a>
+<!-- Motion Animation Header -->
+<img src="assets/readme-motion-header.gif" alt="Looping motion banner for Meta Ads competitor intelligence, showing creative signals and the research workflow" width="100%"/>
 
 <br/>
 
@@ -16,14 +14,6 @@
 <img src="https://img.shields.io/badge/Alerts-Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white&labelColor=1a1a2e" alt="Telegram"/>
 
 <br/><br/>
-
-<!-- Animated description -->
-<img src="https://readme-typing-svg.demolab.com?font=Inter&weight=500&size=16&duration=4000&pause=2000&color=888888&center=true&vCenter=true&repeat=true&width=650&height=30&lines=Automatically+scrape%2C+filter%2C+classify+%26+log+competitor+ads+%F0%9F%94%84;Turn+Meta+Ad+Library+into+structured%2C+actionable+data+%F0%9F%93%88;AI-powered+creative+analysis+on+autopilot+%F0%9F%A4%96" alt="Description" />
-
-<br/>
-
-<!-- Wave Separator -->
-<img src="https://raw.githubusercontent.com/mayhemantt/mayhemantt/Update/svg/Bottom.svg" alt="wave" width="100%"/>
 
 </div>
 
