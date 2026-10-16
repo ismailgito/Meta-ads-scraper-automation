@@ -108,7 +108,7 @@ flowchart LR
 
 ---
 
-## 🕹️ Pixel-Art Animations
+## 🕹️ Exact workflows
 
 <div align="center">
 <table>
