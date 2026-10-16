@@ -108,6 +108,19 @@ flowchart LR
 
 ---
 
+## 🕹️ Pixel-Art Animations
+
+<div align="center">
+<table>
+<tr>
+<td align="center"><strong>Ad Scout</strong><br/><img src="assets/pixel-ad-scout.gif" width="420" alt="Pixel-art robot scanning a Meta ad card"/></td>
+<td align="center"><strong>Workflow Pipeline</strong><br/><img src="assets/pixel-workflow-pipeline.gif" width="460" alt="Pixel-art ad data moving through filtering, AI classification, Sheets, and Telegram"/></td>
+</tr>
+</table>
+</div>
+
+---
+
 ## 👥 Target Audience
 
 <div align="center">
